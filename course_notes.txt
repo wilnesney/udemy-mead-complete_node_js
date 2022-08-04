@@ -1,0 +1,5 @@
+* The value of module.exports will be the return value of require() when module is loaded.
+* 'npm init' to initialize npm for a project. Results in package.json file.
+* Exclude node_modules from repos. Run 'npm install' (no other args) to rebuild the node_modules folder from package.json and package-lock.json (which MUST be included in repo).
+* 'npm install validator@10.8.0' installs a specific version (10.8.0) of the validator module.
+* 'npm install nodemon -g' the -g flag installs the package globally (not per package), making it accessible from the command line as a new command (e.g., 'nodemon app.js', not 'node nodemon app.js').
