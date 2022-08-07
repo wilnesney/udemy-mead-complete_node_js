@@ -9,17 +9,17 @@ if (process.argv.length < 3) {
     return console.error('Multi-word locations must be in quotes.');
 }
 
-geocode(process.argv[2], (error, data) => {
+geocode(process.argv[2], (error, { latitude, longitude, location } = {}) => {
     if (error) {
         return console.error(error);
     } 
 
-    forecast(data.latitude, data.longitude, (error, forecastData) => {
+    forecast(latitude, longitude, (error, forecastData) => {
         if (error) {
             return console.error(error);
         }
         
-        console.log(data.location);
+        console.log(location);
         console.log(forecastData);
     })
 })
