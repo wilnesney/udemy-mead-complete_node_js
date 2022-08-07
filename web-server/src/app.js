@@ -1,21 +1,17 @@
+const path = require('path');
 const express = require('express');
 
 const app = express();
 
-app.get('', (req, res) => {
-    res.send('Hello express!');
-});
-
-app.get('/help', (req, res) => {
-    res.send('Help page');
-});
-
-app.get('/about', (req, res) => {
-    res.send('About page');
-});
+// Serve static assets from the public folder.
+const publicDirectoryPath = path.join(__dirname, '../public');
+app.use(express.static(publicDirectoryPath));
 
 app.get('/weather', (req, res) => {
-    res.send('Weather page');
+    res.send({
+        location: 'Renton, WA',
+        forecast: 'Sunny and warm'
+    });
 });
 
 const PORT_NUM = 3000;

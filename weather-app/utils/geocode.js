@@ -7,17 +7,17 @@ const geocode = (address, callback) => {
     const encodedAddress = encodeURIComponent(address);
     const url = `${MAPBOX_BASE_URL}geocoding/v5/mapbox.places/${encodedAddress}.json?access_token=${MAPBOX_ACCESS_TOKEN}&limit=1`;
 
-    request({url, json: true}, (error, response) => {
+    request({url, json: true}, (error, { body }) => {
         if (error) {
             callback('Unable to connect to location services', undefined);
-        } else if (!response?.body?.features?.length) {
+        } else if (!body?.features?.length) {
             callback('Unable to find location. Please search again.');
         } else {
-            const [longitude, latitude] = response.body.features[0].center;
+            const [longitude, latitude] = body.features[0].center;
             callback(undefined, {
                 latitude,
                 longitude,
-                location: response.body.features[0].place_name,
+                location: body.features[0].place_name,
             });
         }
     });
