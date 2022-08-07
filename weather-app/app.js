@@ -14,7 +14,7 @@ geocode(process.argv[2], (error, data) => {
         return console.error(error);
     } 
 
-    forecast(47.4756353, -122.2086203, (error, forecastData) => {
+    forecast(data.latitude, data.longitude, (error, forecastData) => {
         if (error) {
             return console.error(error);
         }
