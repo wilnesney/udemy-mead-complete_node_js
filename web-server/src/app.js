@@ -41,6 +41,23 @@ app.get('/help', (req, res) => {
     })
 })
 
+// 404 pages
+app.get('/help/*', (req, res) => {
+    res.render('404', {
+        title: 'Oh, no!',
+        errorText: 'Help article not found.',
+        name: 'G.G. Russey',
+    })
+})
+
+app.get('*', (req, res) => {
+    res.render('404', {
+        title: 'Oh, no!',
+        errorText: 'Page not found.',
+        name: 'G.G. Russey',
+    })
+})
+
 
 // Serving JSON
 app.get('/weather', (req, res) => {
