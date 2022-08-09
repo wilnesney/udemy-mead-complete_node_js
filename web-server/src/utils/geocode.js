@@ -7,7 +7,7 @@ const geocode = (address, callback) => {
     const encodedAddress = encodeURIComponent(address);
     const url = `${MAPBOX_BASE_URL}geocoding/v5/mapbox.places/${encodedAddress}.json?access_token=${MAPBOX_ACCESS_TOKEN}&limit=1`;
 
-    request({url, json: true}, (error, { body }) => {
+    request({url, json: true}, (error, { body } = {}) => {
         if (error) {
             callback('Unable to connect to location services', undefined);
         } else if (!body?.features?.length) {
