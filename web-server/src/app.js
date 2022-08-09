@@ -4,6 +4,9 @@ const hbs = require('hbs');
 
 const app = express();
 
+const forecast = require('./utils/forecast.js');
+const geocode = require('./utils/geocode.js');
+
 // Define paths for Express config.
 const publicDirectoryPath = path.join(__dirname, '../public');
 const viewsPath = path.join(__dirname, '../templates/views'); // Default is /views
@@ -41,6 +44,37 @@ app.get('/help', (req, res) => {
     })
 })
 
+// Serving JSON
+app.get('/weather', (req, res) => {
+    if (!req.query.address) {
+        return res.send({
+            error: 'You must provide an address.'
+        })
+    }
+
+    geocode(req.query.address, (error, {latitude, longitude, location}) => {
+        if (error) {
+            return res.send({
+                error,
+            });
+        }
+
+        forecast(latitude, longitude, (error, forecastData) => {
+            if (error) {
+                return res.send({
+                    error,
+                });
+            }
+
+            res.send({
+                address: req.query.address,
+                location,
+                forecast: forecastData,
+            })
+        })
+    })
+});
+
 // 404 pages
 app.get('/help/*', (req, res) => {
     res.render('404', {
@@ -59,13 +93,7 @@ app.get('*', (req, res) => {
 })
 
 
-// Serving JSON
-app.get('/weather', (req, res) => {
-    res.send({
-        location: 'Renton, WA',
-        forecast: 'Sunny and warm'
-    });
-});
+
 
 const PORT_NUM = 3000;
 app.listen(PORT_NUM, () => {
