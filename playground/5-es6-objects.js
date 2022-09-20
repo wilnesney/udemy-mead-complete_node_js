@@ -13,9 +13,12 @@ console.log(productLabel);  // 'Red notebook'
 console.log(stock);
 console.log(rating);    // 5
 
-// Can also use destructuring in function arguments
-const transaction = (type, {label, stock} = {}) => {
+// Can also use destructuring in function arguments.
+// Destructuring undefined (i.e., not provided arg) will crash. Prevent with default arg of {}.
+// Can also provide default arg for destructured items.
+const transaction = (type, {label, stock = 0} = {}) => {
     console.log(type, label, stock);
 }
 
 transaction('order', product);
+transaction('order');
